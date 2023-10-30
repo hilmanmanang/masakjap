@@ -1,5 +1,5 @@
-import { Footer } from '@/app/(main)/footer';
-import { Header } from '@/app/(main)/header';
+import { Footer } from './footer';
+import { Header } from './header';
 
 export default function MailLayout({
     children,
