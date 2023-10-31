@@ -6,11 +6,11 @@ import { Button } from 'primereact/button'
 export const Banner = () => {
     return (
         <div className="bg-green-50 h-[40rem] relative">
-            <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5 flex items-center gap-10">
-                <div className="relative h-[35rem] w-[35rem] lg:block hidden">
+            <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5 flex items-center gap-20">
+                <div className="relative h-[30rem] w-[30rem] lg:block hidden">
                     <Image
-                        src="/banner dish hilman ahmad tornadobyte.png"
-                        alt="banner dish hilman ahmad tornadobyte"
+                        src="/banner food hilman ahmad tornadobyte.png"
+                        alt="banner food hilman ahmad tornadobyte"
                         fill={true}
                         className="object-contain"
                     />
