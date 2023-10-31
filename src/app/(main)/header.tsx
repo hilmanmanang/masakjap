@@ -7,7 +7,7 @@ export const Header = () => {
     return (<div className="fixed w-full z-10">
         <div className="h-[2.625rem] border-b border-b-gray-200">
             <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5 flex justify-between text-gray-600 items-center font-normal text-xs">
-                <div>✼ We generate recipes based on what you have!</div>
+                <div>We generate recipes based on what you have!</div>
                 <div className="flex items-center gap-3">
                     <div>EN</div>
                     <div>|</div>
