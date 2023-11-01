@@ -1,3 +1,4 @@
+import { GlobalContextProvider } from '@/providers/context/globalContext';
 import { poppins } from '@/utils/fonts';
 import type { Metadata } from 'next';
 import 'primeicons/primeicons.css';
@@ -17,9 +18,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <PrimeReactProvider>
-                <body className={poppins.className}>{children}</body>
-            </PrimeReactProvider>
+            <GlobalContextProvider>
+                <PrimeReactProvider>
+                    <body className={poppins.className}>{children}</body>
+                </PrimeReactProvider>
+            </GlobalContextProvider>
         </html>
     )
 }

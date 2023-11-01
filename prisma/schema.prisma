@@ -66,3 +66,13 @@ model transactions {
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt
 }
+
+// Masakjap project
+model ingredients {
+    id        Int      @id @default(autoincrement())
+    name      String   @unique
+    qty       Int
+    unit      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

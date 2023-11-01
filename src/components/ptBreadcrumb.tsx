@@ -10,7 +10,10 @@ export const PtBreadcrumb = ({ items }: any) => {
                 className: "text-gray-400 absolute bg-transparent top-1/2 -translate-y-1/2 p-0"
             },
             separatorIcon: {
-                className: "text-gray-400 w-3 mx-1"
+                className: "text-gray-400 w-3 mx-1 h-5"
+            },
+            menuitem: {
+                className: "h-4"
             }
         }} />
     </div>)
