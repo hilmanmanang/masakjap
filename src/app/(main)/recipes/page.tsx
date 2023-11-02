@@ -1,9 +1,8 @@
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
-import Image from "next/image";
 import { RecipeCard } from "./recipeCard";
 
-export default function MyFridge() {
-    const items = [{ label: 'Recipes', url: '/recipes', className: 'text-success' }]
+export default function Recipes() {
+    const items = [{ label: "Recipes", className: "text-success" }]
 
     return (<div>
         <PtBreadcrumb items={items} />

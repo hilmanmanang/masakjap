@@ -19,7 +19,20 @@
     color: unset !important;
 }
 
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    box-shadow: unset !important;
+    outline: unset !important;
+    outline-offset: unset !important;
+    border-color: unset !important;
+}
+
 .layout-screen {
     min-height: calc(100vh - 5rem);
-    padding-top: 11.25rem;
+    padding-top: 8.625rem;
+}
+
+@media screen and (max-width: 992px) {
+    html {
+        font-size: 12px;
+    }
 }
