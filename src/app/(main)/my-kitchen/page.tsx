@@ -2,15 +2,19 @@
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
 import { useGlobalContext } from "@/providers/context/globalContext";
 import { Ingredient } from "@/utils/interface";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Account from "../account/page";
+
 export default function MyKitchen() {
     const items = [{ label: "My Kitchen", className: "text-success" }]
     const router = useRouter()
+    const { data: session } = useSession();
 
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const { setIngredientForm } = useGlobalContext()
@@ -59,24 +63,28 @@ export default function MyKitchen() {
         }
     }
 
-    return (<div>
-        <PtBreadcrumb items={items} />
-        <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5">
-            <div className="mt-10 mb-8 text-gray-900 font-semibold text-[2rem] text-center">My Kitchen</div>
-            <div className="flex justify-end mb-8">
-                <Button type="button" label="Create New Ingredient" className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={() => router.push("/my-kitchen/new")} />
+    if (session && session.user) {
+        return (<div>
+            <PtBreadcrumb items={items} />
+            <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5">
+                <div className="mt-10 mb-8 text-gray-900 font-semibold text-[2rem] text-center">My Kitchen</div>
+                <div className="flex justify-end mb-8">
+                    <Button type="button" label="Create New Ingredient" className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={() => router.push("/my-kitchen/new")} />
+                </div>
+                <DataTable value={ingredients}>
+                    <Column field="name" header="NAME" sortable />
+                    <Column field="qty" header="QUANTITY" sortable align="right" />
+                    <Column field="unit" header="UNIT" sortable align="right" />
+                    <Column
+                        className="w-52"
+                        header="ACTION"
+                        body={actionBodyTemplate}
+                        align="right">
+                    </Column>
+                </DataTable>
             </div>
-            <DataTable value={ingredients}>
-                <Column field="name" header="NAME" sortable />
-                <Column field="qty" header="QUANTITY" sortable align="right" />
-                <Column field="unit" header="UNIT" sortable align="right" />
-                <Column
-                    className="w-52"
-                    header="ACTION"
-                    body={actionBodyTemplate}
-                    align="right">
-                </Column>
-            </DataTable>
-        </div>
-    </div>)
+        </div>)
+    } else {
+        return <Account />
+    }
 }

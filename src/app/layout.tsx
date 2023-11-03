@@ -1,4 +1,5 @@
 import { GlobalContextProvider } from '@/providers/context/globalContext';
+import NextAuthProviders from '@/providers/next-auth/sessionProvider';
 import { poppins } from '@/utils/fonts';
 import type { Metadata } from 'next';
 import 'primeicons/primeicons.css';
@@ -21,23 +22,25 @@ export default function RootLayout({
     return (
         <html lang="en">
             <GlobalContextProvider>
-                <PrimeReactProvider>
-                    <body className={poppins.className}>
-                        <ToastContainer
-                            position="top-center"
-                            autoClose={2000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover={false}
-                            theme="colored"
-                        />
-                        {children}
-                    </body>
-                </PrimeReactProvider>
+                <NextAuthProviders>
+                    <PrimeReactProvider>
+                        <body className={poppins.className}>
+                            <ToastContainer
+                                position="top-center"
+                                autoClose={2000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover={false}
+                                theme="colored"
+                            />
+                            {children}
+                        </body>
+                    </PrimeReactProvider>
+                </NextAuthProviders>
             </GlobalContextProvider>
         </html>
     )

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --toastify-color-success: #00B207;
+    --toastify-color-error: #EA4B48;
+}
+
 .scroll-animate-container {
     transform: translateY(-50px);
     opacity: 0;
@@ -25,6 +30,11 @@
     outline-offset: unset !important;
     border-color: unset !important;
 }
+
+/* .Toastify__toast-theme--colored.Toastify__toast--success {
+    color: var(--toastify-text-color-success);
+    background: var(--toastify-color-success);
+} */
 
 .layout-screen {
     min-height: calc(100vh - 5rem);

@@ -7,8 +7,7 @@ export interface Ingredient {
 
 export interface User {
     id: number | null,
-    email: string,
+    username: string,
     password: string
-    name?: string,
-    role: "USER" | "ADMIN" | "SUPERADMIN"
+    role: "User" | "Admin" | "Super Admin"
 }

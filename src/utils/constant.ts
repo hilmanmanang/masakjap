@@ -9,8 +9,7 @@ export const initIngredient: Ingredient = {
 
 export const initUser: User = {
     id: null,
-    email: "",
+    username: "",
     password: "",
-    name: "",
-    role: "USER"
+    role: "User"
 }

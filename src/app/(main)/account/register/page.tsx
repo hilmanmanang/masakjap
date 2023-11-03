@@ -2,30 +2,49 @@
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
 import { initUser } from "@/utils/constant";
 import { User } from "@/utils/interface";
+import { toHash } from "@/utils/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Register() {
     const items = [
         { label: "Account", url: "/account" },
         { label: "Register", className: "text-success" }
     ]
-
+    const router = useRouter()
     const [registerForm, setRegisterForm] = useState<User>(initUser)
     const [confirmPassword, setConfirmPassword] = useState<string>("")
     const [acceptTnC, setAcceptTnC] = useState<boolean | undefined>(false)
-    const { email, password } = registerForm
+    const { username, password } = registerForm
 
-    const handleCreateAccount = () => {
-        console.log(registerForm)
+    const handleCreateAccount = async (event: any) => {
+        event.preventDefault();
+        const { username, password, role } = registerForm
+
+        const response = await fetch("/api/user/create", {
+            method: "POST",
+            body: JSON.stringify({
+                username,
+                role,
+                password: await toHash(password)
+            })
+        })
+
+        if (response.ok) {
+            toast.success(`User is created!`)
+            router.push("/")
+        } else {
+            toast.error("Unexpected error")
+        }
     }
 
     const handleConfirmPassword = (event: any) => {
         const { value } = event.target
-        console.log(value)
         setConfirmPassword(value)
     }
 
@@ -35,15 +54,15 @@ export default function Register() {
             <div className="max-w-[32.5rem] p-6 border border-gray-50 mx-auto" style={{ boxShadow: '0 0 56px #00260314' }}>
                 <div className="text-gray-900 font-semibold text-[2rem] text-center mb-5">Register</div>
                 <div className="mb-4">
-                    <div className="text-gray-900 text-sm font-normal mb-2">Email*</div>
+                    <div className="text-gray-900 text-sm font-normal mb-2">Username*</div>
                     <InputText
-                        value={email}
+                        value={username}
                         type="email"
                         onChange={(e) => setRegisterForm({
                             ...registerForm,
-                            email: e.target.value
+                            username: e.target.value
                         })}
-                        placeholder="Insert email"
+                        placeholder="Insert username"
                         pt={{
                             root: {
                                 className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
@@ -105,7 +124,7 @@ export default function Register() {
                     label="Create Account"
                     className="text-white w-full rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none mb-5"
                     onClick={handleCreateAccount}
-                    disabled={!acceptTnC || !email || !password || (confirmPassword !== password)}
+                    disabled={!acceptTnC || !username || !password || (confirmPassword !== password)}
                 />
                 <div className="text-center text-gray-600 text-sm font-normal">Already have account? <Link href="/account" className="font-medium text-gray-900">Login</Link></div>
             </div>
