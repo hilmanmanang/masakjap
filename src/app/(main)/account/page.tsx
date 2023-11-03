@@ -80,6 +80,7 @@ export default function Account() {
                                     className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
                                 }
                             }}
+                            
                         />
                     </div>
                     <div className="mb-5 flex md:flex-row flex-col gap-4 items-center justify-between w-full">

@@ -39,13 +39,11 @@ export default function MyKitchen() {
     }
 
     const openIngredient = (ingredient: Ingredient) => {
-        const { id, name, qty, unit } = ingredient
+        const { id, name } = ingredient
 
         setIngredientForm({
             id,
-            name,
-            qty,
-            unit
+            name
         })
 
         router.push("/my-kitchen/" + id)
@@ -73,8 +71,6 @@ export default function MyKitchen() {
                 </div>
                 <DataTable value={ingredients}>
                     <Column field="name" header="NAME" sortable />
-                    <Column field="qty" header="QUANTITY" sortable align="right" />
-                    <Column field="unit" header="UNIT" sortable align="right" />
                     <Column
                         className="w-52"
                         header="ACTION"

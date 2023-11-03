@@ -1,10 +1,13 @@
-import { Ingredient, User } from "./interface";
+import { Ingredient, IngredientList, User } from "./interface";
 
 export const initIngredient: Ingredient = {
     id: null,
     name: "",
-    qty: null,
-    unit: ""
+}
+
+export const initIngredientList: IngredientList = {
+    id: null,
+    name: "",
 }
 
 export const initUser: User = {

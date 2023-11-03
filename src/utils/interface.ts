@@ -1,8 +1,11 @@
 export interface Ingredient {
     id: number | null,
     name: string,
-    qty: number | null,
-    unit: string
+}
+
+export interface IngredientList {
+    id: number | null,
+    name: string,
 }
 
 export interface User {

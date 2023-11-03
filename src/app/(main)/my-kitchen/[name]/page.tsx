@@ -15,7 +15,7 @@ import Account from "../../account/page";
 export default function Name() {
     const router = useRouter()
     const { ingredientForm, setIngredientForm } = useGlobalContext()
-    const { name, qty, unit } = ingredientForm
+    const { name } = ingredientForm
     const { data: session } = useSession();
 
     const items = [
@@ -23,23 +23,24 @@ export default function Name() {
         { label: name ? name : "Create New", className: "text-success" }
     ]
 
-    const ingredientsUnit = [
-        "Batang",
-        "Ulas",
-        "Buah",
-        "Ekor"
-    ]
+    // const ingredientUnit = [
+    //     "Batang",
+    //     "Ulas",
+    //     "Buah",
+    //     "Ekor"
+    // ]
 
-    const [filteredIngredientUnit, setFilteredIngredientUnit] = useState<string[]>([])
-    const searchUnit = (event: any) => {
-        const { query } = event
-        let _filteredIngredientUnit: string[] = []
-        _filteredIngredientUnit = ingredientsUnit.filter((name: string) => name.toUpperCase().includes(query.toUpperCase()))
-        setFilteredIngredientUnit(_filteredIngredientUnit);
-    }
+    // const [filteredIngredientUnit, setFilteredIngredientUnit] = useState<string[]>([])
+    // const searchUnit = (event: any) => {
+    //     const { query } = event
+    //     let _filteredIngredientUnit: string[] = []
+    //     _filteredIngredientUnit = ingredientUnit.filter((name: string) => name.toUpperCase().includes(query.toUpperCase()))
+    //     setFilteredIngredientUnit(_filteredIngredientUnit);
+    // }
 
     const handleSubmit = async () => {
         const { id, ...ingredientWithoutId } = ingredientForm
+        console.log(ingredientForm)
 
         const response = await fetch(id ? "/api/ingredient/update" : "/api/ingredient/create", {
             method: id ? "PUT" : "POST",
@@ -77,56 +78,29 @@ export default function Name() {
                         }}
                     />
                 </div>
-                <div className="flex md:flex-row flex-col gap-4">
-                    <div className="grow">
-                        <div className="text-gray-900 text-sm font-normal mb-2">Quantity*</div>
-                        <InputNumber
-                            value={qty}
-                            onValueChange={(e) => setIngredientForm({
-                                ...ingredientForm,
-                                qty: +(e.value || 0)
-                            })}
-                            placeholder="Insert quantity"
-                            pt={{
-                                root: {
-                                    className: "w-full"
-                                },
-                                input: {
-                                    root: {
-                                        className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
-                                    }
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="grow">
-                        <div className="text-gray-900 text-sm font-normal mb-2">Unit*</div>
-                        <AutoComplete
-                            value={unit}
-                            onChange={(e) => setIngredientForm({
-                                ...ingredientForm,
-                                unit: e.value
-                            })}
-                            suggestions={filteredIngredientUnit}
-                            completeMethod={searchUnit}
-                            forceSelection
-                            placeholder="Insert unit"
-                            pt={{
-                                root: {
-                                    className: "w-full"
-                                },
-                                input: {
-                                    root: {
-                                        className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
-                                    }
-                                }
-                            }}
-                        />
-                    </div>
-                </div>
+                {/* <AutoComplete
+                    value={unit}
+                    onChange={(e) => setIngredientForm({
+                        ...ingredientForm,
+                        unit: e.value
+                    })}
+                    suggestions={filteredIngredientUnit}
+                    completeMethod={searchUnit}
+                    placeholder="Insert unit"
+                    pt={{
+                        root: {
+                            className: "w-full"
+                        },
+                        input: {
+                            root: {
+                                className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
+                            }
+                        }
+                    }}
+                /> */}
                 <div className="flex justify-end mt-8 gap-3">
                     <Button type="button" label="Back" className="text-gray-900 rounded-full bg-gray-50 px-8 py-[0.875rem] focus:shadow-none" onClick={() => router.back()} />
-                    <Button type="button" label="Submit" disabled={!name || !qty || !unit} className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={handleSubmit} />
+                    <Button type="button" label="Submit" disabled={!name} className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={handleSubmit} />
                 </div>
             </div>
         </div>)
