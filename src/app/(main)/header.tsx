@@ -94,7 +94,8 @@ export const Header = () => {
                     <Link href="/recipes" className={`${pathname === '/recipes' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
                         Recipes
                     </Link>
-                    {session && session.user && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
+                    {true && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
+                    {/* {session && session.user && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}> */}
                         My Kitchen
                     </Link>}
                 </div>

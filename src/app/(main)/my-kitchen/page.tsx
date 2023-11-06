@@ -39,11 +39,12 @@ export default function MyKitchen() {
     }
 
     const openIngredient = (ingredient: Ingredient) => {
-        const { id, name } = ingredient
+        const { id, ingredientListName, expiredDate } = ingredient
 
         setIngredientForm({
             id,
-            name
+            ingredientListName,
+            expiredDate
         })
 
         router.push("/my-kitchen/" + id)
@@ -56,12 +57,13 @@ export default function MyKitchen() {
         })
 
         if (response.ok) {
-            toast.success(`Ingredient ${ingredient.name} is deleted.`)
+            toast.success(`Ingredient ${ingredient.ingredientListName} is deleted.`)
             getAllIngredients()
         }
     }
 
-    if (session && session.user) {
+    if (true) {
+        // if (session && session.user) {
         return (<div>
             <PtBreadcrumb items={items} />
             <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5">
@@ -70,7 +72,7 @@ export default function MyKitchen() {
                     <Button type="button" label="Create New Ingredient" className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={() => router.push("/my-kitchen/new")} />
                 </div>
                 <DataTable value={ingredients}>
-                    <Column field="name" header="NAME" sortable />
+                    <Column field="name.enname" header="NAME" sortable />
                     <Column
                         className="w-52"
                         header="ACTION"

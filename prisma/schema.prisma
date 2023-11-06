@@ -49,17 +49,22 @@ model transactions {
 
 // Masakjap project
 model ingredients {
-    id        Int      @id @default(autoincrement())
-    name      String   @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id                 Int            @id @default(autoincrement())
+    name               ingredientList @relation(fields: ingredientListName, references: keyname)
+    ingredientListName String
+    expiredDate        String
+    createdAt          DateTime       @default(now())
+    updatedAt          DateTime       @updatedAt
 }
 
-model ingredientLists {
-    id        Int      @id @default(autoincrement())
-    name      String   @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model ingredientList {
+    id          Int           @id @default(autoincrement())
+    keyname     String        @unique
+    myname      String
+    enname      String
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
+    ingredients ingredients[]
 }
 
 model users {

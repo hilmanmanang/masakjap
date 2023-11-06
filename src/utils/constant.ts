@@ -2,12 +2,15 @@ import { Ingredient, IngredientList, User } from "./interface";
 
 export const initIngredient: Ingredient = {
     id: null,
-    name: "",
+    ingredientListName: "",
+    expiredDate: "06/11/2023"
 }
 
 export const initIngredientList: IngredientList = {
     id: null,
-    name: "",
+    keyname: "",
+    myname: "",
+    enname: ""
 }
 
 export const initUser: User = {
