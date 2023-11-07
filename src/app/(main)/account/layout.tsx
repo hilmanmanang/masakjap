@@ -1,13 +1,13 @@
 
 "use client"
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import RiceBowlOutlinedIcon from "@mui/icons-material/RiceBowlOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Account from "./page";
-import Link from "next/link";
 
 export default function AccountLayout({
     children,
@@ -18,7 +18,11 @@ export default function AccountLayout({
         { label: "Account", className: "text-success" }
     ]
     const pathname = usePathname();
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+
+    if (status === "loading") {
+        return <div>Loading...</div>
+    }
 
     if (!session) {
         return <Account />
@@ -32,8 +36,8 @@ export default function AccountLayout({
                     <div className="text-gray-900 text-xl font-medium pt-6 pl-5 pb-4">Navigation</div>
                     <Link href="/account">
                         <div className={`flex flex-row gap-[0.625rem] cursor-pointer hover:bg-green-50 items-center py-4 ${pathname === '/account' ? 'bg-green-50 border-l-[0.188rem] border-l-success pl-[1.063rem]' : 'pl-5'}`}>
-                            <AccountCircleOutlinedIcon className={`${pathname === '/account' ? 'text-gray-900' : 'text-gray-200'} w-[1.125rem] h-[1.125rem]`} />
-                            <span className={`${pathname === '/account' ? 'text-gray-900' : 'text-gray-600'}`}>Account</span>
+                            <DashboardOutlinedIcon className={`${pathname === '/account' ? 'text-gray-900' : 'text-gray-200'} w-[1.125rem] h-[1.125rem]`} />
+                            <span className={`${pathname === '/account' ? 'text-gray-900' : 'text-gray-600'}`}>Dashboard</span>
                         </div>
                     </Link>
                     <Link href="/account/my-recipes">
@@ -49,7 +53,7 @@ export default function AccountLayout({
                         </div>
                     </Link>
                 </div>
-                <div className="rounded-lg border border-gray-100 grow">{children}</div>
+                <div className="w-full">{children}</div>
             </div>
         </div>
     </div>)

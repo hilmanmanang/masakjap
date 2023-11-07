@@ -1,4 +1,8 @@
 "use client"
+import { initUser } from '@/utils/constant';
+import { User } from '@/utils/interface';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
@@ -13,12 +17,12 @@ export const Header = () => {
     const { data: session } = useSession();
     const menuRight = useRef<any>(null);
     const router = useRouter()
-    const [role, setRole] = useState<string>("User")
+    const [user, setUser] = useState<User>(initUser)
 
     useEffect(() => {
-        if (session && session.user) {
+        if (session?.user) {
             const { user }: any = session
-            setRole(user.role)
+            setUser(user)
         }
     }, [session])
 
@@ -26,22 +30,26 @@ export const Header = () => {
         {
             template: (item: any, options: any) => {
                 return (<div className="flex items-center gap-3 py-3 px-4 border-b border-b-gray-200">
-                    <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" className="shrink-0" />
+                    {user.image ?
+                        <Avatar image={user.image || ''} shape="circle" className="shrink-0" /> :
+                        <div className="w-8 h-8 rounded-full bg-[#20b52633] text-success flex justify-center items-center text-xs font-semibold shrink-0">{user.firstName?.[0]}{user.lastName?.[0]}</div>
+
+                    }
                     <div>
-                        <div className="font-bold">Hilman</div>
-                        <div>{role}</div>
+                        <div className="font-bold truncate w-32">{`${user.firstName} ${user.lastName}`}</div>
+                        <div>{user.username}</div>
                     </div>
                 </div>)
             }
         },
         {
             label: 'Account',
-            icon: 'pi pi-user',
+            icon: (options: any) => <PersonOutlineOutlinedIcon {...options.iconProps} />,
             command: () => router.push("/account")
         },
         {
             label: "Logout",
-            icon: "pi pi-sign-out",
+            icon: (options: any) => <LogoutOutlinedIcon {...options.iconProps} />,
             command: () => signOut()
         }
     ]
@@ -60,15 +68,11 @@ export const Header = () => {
                             (<>
                                 <Button
                                     type="button"
-                                    icon="pi pi-user"
                                     className="text-gray-900 rounded-full w-16 h-16 focus:shadow-none text-2xl"
                                     onClick={(e) => menuRight?.current.toggle(e)}
-                                    pt={{
-                                        icon: {
-                                            className: "text-xl"
-                                        }
-                                    }}
-                                />
+                                >
+                                    <PersonOutlineOutlinedIcon className="text-3xl" />
+                                </Button>
                                 <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
                             </>
                             ) :

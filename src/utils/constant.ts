@@ -11,7 +11,10 @@ export const initUser: User = {
     id: null,
     username: "",
     password: "",
-    role: "User"
+    role: "User",
+    firstName: "",
+    lastName: "",
+    image: ""
 }
 
 export const ingredientData: string[] = [

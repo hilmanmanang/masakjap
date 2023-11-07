@@ -1,7 +1,8 @@
-import { ScrollReveal } from '@/components/scrollReveal'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from 'primereact/button'
+import { ScrollReveal } from '@/components/scrollReveal';
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from 'primereact/button';
 
 export const Banner = () => {
     return (
@@ -27,11 +28,10 @@ export const Banner = () => {
                     </ScrollReveal>
                     <ScrollReveal delay="0.6s">
                         <Link href="/recipes">
-                            <Button label="Cook now" iconPos="right" icon="pi pi-arrow-right" pt={{
-                                root: {
-                                    className: "text-white bg-success py-4 px-10 rounded-full shadow-none"
-                                }
-                            }} />
+                            <Button className="text-white bg-success py-4 px-10 rounded-full shadow-none flex gap-4">
+                                <span>Cook now</span>
+                                <EastOutlinedIcon />
+                            </Button>
                         </Link>
                     </ScrollReveal>
                 </div>

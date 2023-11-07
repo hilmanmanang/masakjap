@@ -60,8 +60,11 @@ model ingredients {
 model users {
     id        Int      @id @default(autoincrement())
     username  String   @unique
-    password  String
-    role      String
+    password  String?
+    role      String?
+    firstName String
+    lastName  String
+    image     String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

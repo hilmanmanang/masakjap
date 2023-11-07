@@ -2,6 +2,8 @@
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
 import { useGlobalContext } from "@/providers/context/globalContext";
 import { Ingredient } from "@/utils/interface";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -10,7 +12,6 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Account from "../auth/login/page";
 import Auth from "../auth/login/page";
 
 export default function MyKitchen() {
@@ -35,8 +36,12 @@ export default function MyKitchen() {
 
     const actionBodyTemplate = (ingredient: Ingredient) => {
         return (<div className="flex flex-row gap-2 justify-end">
-            <Button type="button" icon="pi pi-trash" className="text-gray-900 rounded-full bg-gray-50 hover:text-white hover:bg-success p-[0.625rem] focus:shadow-none" onClick={() => deleteIngredient(ingredient)} />
-            <Button type="button" icon="pi pi-eye" className="text-gray-900 rounded-full bg-gray-50 hover:text-white hover:bg-success p-[0.625rem] focus:shadow-none" onClick={() => openIngredient(ingredient)} />
+            <Button type="button" className="text-gray-900 rounded-full bg-gray-50 hover:text-white hover:bg-success p-[0.625rem] focus:shadow-none" onClick={() => deleteIngredient(ingredient)}>
+                <DeleteOutlinedIcon />
+            </Button>
+            <Button type="button" className="text-gray-900 rounded-full bg-gray-50 hover:text-white hover:bg-success p-[0.625rem] focus:shadow-none" onClick={() => openIngredient(ingredient)}>
+                <RemoveRedEyeOutlinedIcon />
+            </Button>
         </div>)
     }
 
