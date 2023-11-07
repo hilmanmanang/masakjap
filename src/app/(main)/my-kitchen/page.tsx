@@ -2,6 +2,7 @@
 import { PtBreadcrumb } from "@/components/ptBreadcrumb";
 import { useGlobalContext } from "@/providers/context/globalContext";
 import { Ingredient } from "@/utils/interface";
+import moment from "moment";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
@@ -9,8 +10,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Account from "../account/page";
-import moment from "moment";
+import Account from "../auth/login/page";
+import Auth from "../auth/login/page";
 
 export default function MyKitchen() {
     const items = [{ label: "My Kitchen", className: "text-success" }]
@@ -71,8 +72,7 @@ export default function MyKitchen() {
         }
     }
 
-    if (true) {
-        // if (session && session.user) {
+    if (session && session.user) {
         return (<div>
             <PtBreadcrumb items={items} />
             <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5">
@@ -102,6 +102,6 @@ export default function MyKitchen() {
             </div>
         </div>)
     } else {
-        return <Account />
+        return <Auth />
     }
 }

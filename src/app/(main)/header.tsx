@@ -1,13 +1,12 @@
 "use client"
-import Link from "next/link"
-import { usePathname } from 'next/navigation'
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname, useRouter } from 'next/navigation';
+import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
-import { useEffect, useRef, useState } from "react";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
-import { Avatar } from "primereact/avatar";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export const Header = () => {
     const pathname = usePathname();
@@ -36,13 +35,9 @@ export const Header = () => {
             }
         },
         {
-            label: 'Profile',
+            label: 'Account',
             icon: 'pi pi-user',
             command: () => router.push("/account")
-        },
-        {
-            label: 'Settings',
-            icon: 'pi pi-cog'
         },
         {
             label: "Logout",
@@ -77,7 +72,7 @@ export const Header = () => {
                                 <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
                             </>
                             ) :
-                            <Link href="/account" >
+                            <Link href="/auth/login" >
                                 Login
                             </Link>
                         }
@@ -94,8 +89,7 @@ export const Header = () => {
                     <Link href="/recipes" className={`${pathname === '/recipes' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
                         Recipes
                     </Link>
-                    {true && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
-                    {/* {session && session.user && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}> */}
+                    {session && session.user && <Link href="/my-kitchen" className={`${pathname === '/my-kitchen' ? 'text-white' : 'text-gray-400'} font-medium text-sm`}>
                         My Kitchen
                     </Link>}
                 </div>

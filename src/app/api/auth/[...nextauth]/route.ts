@@ -43,12 +43,14 @@ const handler = NextAuth({
         }),
     ],
     pages: {
-        signIn: "/account"
+        signIn: "/auth/login"
     },
     callbacks: {
         async session({ session }: any) {
-            const { password, ...userWithoutPassword } = user
-            session.user = userWithoutPassword
+            if (user) {
+                session.user = user
+                session.user.password = ""
+            }
             return session
         },
     }

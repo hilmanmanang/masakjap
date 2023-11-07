@@ -3,15 +3,16 @@ import { PtBreadcrumb } from "@/components/ptBreadcrumb";
 import { useGlobalContext } from "@/providers/context/globalContext";
 import { ingredientData, initIngredient } from "@/utils/constant";
 import { generateKeyName } from "@/utils/utils";
+import moment from 'moment';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AutoComplete } from "primereact/autocomplete";
 import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Account from "../../account/page";
-import { Calendar } from "primereact/calendar";
-import moment from 'moment';
+import Account from "../../auth/login/page";
+import Auth from "../../auth/login/page";
 
 export default function Name() {
     const router = useRouter()
@@ -23,9 +24,6 @@ export default function Name() {
         { label: "My Kitchen", url: "/my-kitchen" },
         { label: name ? name : "Create New", className: "text-success" }
     ]
-
-
-
 
     const [filteredIngredientList, setFilteredIngredientList] = useState<string[]>([])
     const searchIngredientList = (event: any) => {
@@ -66,8 +64,7 @@ export default function Name() {
 
     }
 
-    if (true) {
-        // if (session && session.user) {
+    if (session && session.user) {
         return (<div>
             <PtBreadcrumb items={items} />
             <div className="lg:max-w-[90rem] md:max-w-[87.5rem] max-w-[85rem] h-full mx-auto lg:px-[3.75rem] md:px-10 px-5">
@@ -125,6 +122,6 @@ export default function Name() {
             </div>
         </div>)
     } else {
-        return <Account />
+        return <Auth />
     }
 }

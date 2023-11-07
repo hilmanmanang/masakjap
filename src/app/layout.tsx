@@ -8,6 +8,7 @@ import 'primereact/resources/themes/tailwind-light/theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
+import { EdgeStoreProvider } from '@/providers/edgestore';
 
 export const metadata: Metadata = {
     title: 'Masakjap',
@@ -24,21 +25,23 @@ export default function RootLayout({
             <GlobalContextProvider>
                 <NextAuthProviders>
                     <PrimeReactProvider>
-                        <body className={poppins.className}>
-                            <ToastContainer
-                                position="top-center"
-                                autoClose={2000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover={false}
-                                theme="colored"
-                            />
-                            {children}
-                        </body>
+                        <EdgeStoreProvider>
+                            <body className={poppins.className}>
+                                <ToastContainer
+                                    position="top-center"
+                                    autoClose={2000}
+                                    hideProgressBar={false}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss
+                                    draggable
+                                    pauseOnHover={false}
+                                    theme="colored"
+                                />
+                                {children}
+                            </body>
+                        </EdgeStoreProvider>
                     </PrimeReactProvider>
                 </NextAuthProviders>
             </GlobalContextProvider>

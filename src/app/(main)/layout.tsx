@@ -1,7 +1,7 @@
 import { Footer } from './footer';
 import { Header } from './header';
 
-export default function MailLayout({
+export default function MainLayout({
     children,
 }: {
     children: React.ReactNode

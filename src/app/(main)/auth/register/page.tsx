@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 
 export default function Register() {
     const items = [
-        { label: "Account", url: "/account" },
         { label: "Register", className: "text-success" }
     ]
     const router = useRouter()
@@ -126,7 +125,7 @@ export default function Register() {
                     onClick={handleCreateAccount}
                     disabled={!acceptTnC || !username || !password || (confirmPassword !== password)}
                 />
-                <div className="text-center text-gray-600 text-sm font-normal">Already have account? <Link href="/account" className="font-medium text-gray-900">Login</Link></div>
+                <div className="text-center text-gray-600 text-sm font-normal">Already have account? <Link href="/auth/login" className="font-medium text-gray-900">Login</Link></div>
             </div>
         </div>
     </div>)
