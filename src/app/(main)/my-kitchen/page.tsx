@@ -10,6 +10,7 @@ import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Account from "../account/page";
+import moment from "moment";
 
 export default function MyKitchen() {
     const items = [{ label: "My Kitchen", className: "text-success" }]
@@ -27,7 +28,7 @@ export default function MyKitchen() {
         const response = await fetch("/api/ingredient/findMany", {
             method: "POST"
         })
-        const datas = await response.json()
+        const datas: Ingredient[] = await response.json()
         setIngredients(datas)
     }
 
@@ -39,15 +40,8 @@ export default function MyKitchen() {
     }
 
     const openIngredient = (ingredient: Ingredient) => {
-        const { id, ingredientListName, expiredDate } = ingredient
-
-        setIngredientForm({
-            id,
-            ingredientListName,
-            expiredDate
-        })
-
-        router.push("/my-kitchen/" + id)
+        setIngredientForm(ingredient)
+        router.push("/my-kitchen/" + ingredient.id)
     }
 
     const deleteIngredient = async (ingredient: Ingredient) => {
@@ -57,8 +51,23 @@ export default function MyKitchen() {
         })
 
         if (response.ok) {
-            toast.success(`Ingredient ${ingredient.ingredientListName} is deleted.`)
+            toast.success(`Ingredient ${ingredient.name} is deleted.`)
             getAllIngredients()
+        }
+    }
+
+    const statusBodyTemplate = (ingredient: Ingredient) => {
+        const currentDate = moment().format('YYYY-MM-DD')
+        const ingredientExpiredDate = moment(ingredient.expiredDate).format('YYYY-MM-DD')
+
+        if (currentDate > ingredientExpiredDate) {
+            return (<div className="text-danger px-2 py-1 rounded text-sm font-normal w-fit bg-[#ea4b4833]">
+                Expired
+            </div>)
+        } else {
+            return (<div className="text-success_dark px-2 py-1 rounded text-sm font-normal w-fit bg-[#20b52633]">
+                Available
+            </div>)
         }
     }
 
@@ -72,7 +81,17 @@ export default function MyKitchen() {
                     <Button type="button" label="Create New Ingredient" className="text-white rounded-full bg-success px-8 py-[0.875rem] focus:shadow-none" onClick={() => router.push("/my-kitchen/new")} />
                 </div>
                 <DataTable value={ingredients}>
-                    <Column field="name.enname" header="NAME" sortable />
+                    <Column field="name" header="NAME" sortable />
+                    <Column
+                        field="expiredDate"
+                        header="EXPIRED DATE"
+                        align="right">
+                    </Column>
+                    <Column
+                        className="w-20"
+                        header="STATUS"
+                        body={statusBodyTemplate}>
+                    </Column>
                     <Column
                         className="w-52"
                         header="ACTION"

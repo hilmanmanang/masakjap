@@ -5,11 +5,8 @@ export const POST = async () => {
     try {
         const ingredients = await prisma.ingredients.findMany({
             orderBy: {
-                createdAt: 'desc'
+                name: 'asc'
             },
-            include: {
-                name: true
-            }
         })
         return NextResponse.json(ingredients)
     } catch (error) {

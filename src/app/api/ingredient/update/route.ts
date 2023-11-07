@@ -4,13 +4,15 @@ import prisma from "../../../../../prisma/prisma";
 export const PUT = async (req: NextRequest) => {
     try {
         const data = await req.json()
-        const { id, name } = data
+        const { id, name, keyname, expiredDate } = data
         await prisma.ingredients.update({
             where: {
                 id
             },
             data: {
-                name
+                name,
+                keyname,
+                expiredDate
             }
         })
         return NextResponse.json(data)

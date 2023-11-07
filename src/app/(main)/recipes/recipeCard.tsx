@@ -2,12 +2,13 @@ import Image from "next/image"
 import { Rating } from "primereact/rating"
 
 export const RecipeCard = () => {
-    return (<div className="rounded-lg border border-gray-100 w-full">
+    return (<div className="rounded-lg border border-gray-100 w-full hover:shadow-card cursor-pointer hover:border-success_dark">
         <div className="w-full aspect-square relative">
             <Image
                 src="/placeholder.png"
                 alt="placeholder"
                 fill={true}
+                className="rounded-t-lg"
             />
         </div>
         <div className="p-4">

@@ -39,6 +39,9 @@ const config: Config = {
                 warning: "#FF8A00",
                 danger: "#EA4B48",
                 white: "#FFFFFF",
+            },
+            boxShadow: {
+                'card': '0 0 12px #20b52652' 
             }
         },
     },

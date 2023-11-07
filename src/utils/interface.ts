@@ -1,14 +1,8 @@
 export interface Ingredient {
     id: number | null,
-    ingredientListName: string,
-    expiredDate: string
-}
-
-export interface IngredientList {
-    id: number | null,
+    name: string,
     keyname: string,
-    myname: string,
-    enname: string,
+    expiredDate: string
 }
 
 export interface User {

@@ -1,16 +1,10 @@
-import { Ingredient, IngredientList, User } from "./interface";
+import { Ingredient, User } from "./interface";
 
 export const initIngredient: Ingredient = {
     id: null,
-    ingredientListName: "",
-    expiredDate: "06/11/2023"
-}
-
-export const initIngredientList: IngredientList = {
-    id: null,
+    name: "",
     keyname: "",
-    myname: "",
-    enname: ""
+    expiredDate: ""
 }
 
 export const initUser: User = {
@@ -19,3 +13,17 @@ export const initUser: User = {
     password: "",
     role: "User"
 }
+
+export const ingredientData: string[] = [
+    "Ayam",
+    "Bawang Merah",
+    "Bawang Putih",
+    "Bawang Besar",
+    "Cili Kering",
+    "Garam Halus",
+    "Garam Kasar",
+    "Kicap Manis",
+    "Kicap Masin",
+    "Minyak Masak",
+    "Sardin",
+]
