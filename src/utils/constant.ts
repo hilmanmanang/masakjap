@@ -4,7 +4,8 @@ export const initIngredient: Ingredient = {
     id: null,
     name: "",
     keyname: "",
-    expiredDate: ""
+    expiredDate: "",
+    usersName: ""
 }
 
 export const initUser: User = {

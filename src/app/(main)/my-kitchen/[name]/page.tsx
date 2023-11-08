@@ -16,7 +16,7 @@ import Auth from "../../auth/login/page";
 
 export default function Name() {
     const router = useRouter()
-    const { ingredientForm, setIngredientForm } = useGlobalContext()
+    const { ingredientForm, setIngredientForm, userLogin } = useGlobalContext()
     const { name, expiredDate } = ingredientForm
     const { data: session } = useSession();
 
@@ -46,11 +46,13 @@ export default function Name() {
                 id,
                 name,
                 keyname: generateKeyName(name),
-                expiredDate
+                expiredDate,
+                usersName: userLogin.username
             } : {
                 name,
                 keyname: generateKeyName(name),
-                expiredDate
+                expiredDate,
+                usersName: userLogin.username
             })
         })
 

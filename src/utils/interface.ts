@@ -3,6 +3,7 @@ export interface Ingredient {
     name: string
     keyname: string
     expiredDate: string
+    usersName: string
 }
 
 export interface User {

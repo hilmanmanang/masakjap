@@ -20,15 +20,18 @@ export default function MyKitchen() {
     const { data: session } = useSession();
 
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
-    const { setIngredientForm } = useGlobalContext()
+    const { setIngredientForm, userLogin } = useGlobalContext()
 
     useEffect(() => {
         getAllIngredients()
-    }, [])
+    }, [userLogin])
 
     const getAllIngredients = async () => {
         const response = await fetch("/api/ingredient/findMany", {
-            method: "POST"
+            method: "POST",
+            body: JSON.stringify({
+                username: userLogin.username
+            })
         })
         const datas: Ingredient[] = await response.json()
         setIngredients(datas)
