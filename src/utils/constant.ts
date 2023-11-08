@@ -12,8 +12,7 @@ export const initUser: User = {
     username: "",
     password: "",
     role: "User",
-    firstName: "",
-    lastName: "",
+    fullName: "",
     image: ""
 }
 

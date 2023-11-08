@@ -1,12 +1,14 @@
 "use client"
+import { useGlobalContext } from '@/providers/context/globalContext';
 import { initUser } from '@/utils/constant';
 import { User } from '@/utils/interface';
+import { convertPlaceholderName } from '@/utils/utils';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { signOut, useSession } from "next-auth/react";
+import Image from 'next/image';
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
-import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
@@ -17,27 +19,28 @@ export const Header = () => {
     const { data: session } = useSession();
     const menuRight = useRef<any>(null);
     const router = useRouter()
-    const [user, setUser] = useState<User>(initUser)
-
-    useEffect(() => {
-        if (session?.user) {
-            const { user }: any = session
-            setUser(user)
-        }
-    }, [session])
+    const { userLogin } = useGlobalContext()
+    const { fullName, username, image } = userLogin
 
     const items: MenuItem[] = [
         {
             template: (item: any, options: any) => {
                 return (<div className="flex items-center gap-3 py-3 px-4 border-b border-b-gray-200">
-                    {user.image ?
-                        <Avatar image={user.image || ''} shape="circle" className="shrink-0" /> :
-                        <div className="w-8 h-8 rounded-full bg-[#20b52633] text-success flex justify-center items-center text-xs font-semibold shrink-0">{user.firstName?.[0]}{user.lastName?.[0]}</div>
+                    {image ?
+                        <div className='relative w-8 h-8 shrink-0'>
+                            <Image
+                                src={image}
+                                alt={image}
+                                fill={true}
+                                className="rounded-full object-cover"
+                            />
+                        </div> :
+                        <div className="w-8 h-8 rounded-full bg-[#20b52633] text-success flex justify-center items-center text-xs font-semibold shrink-0">{convertPlaceholderName(fullName)}</div>
 
                     }
                     <div>
-                        <div className="font-bold truncate w-32">{`${user.firstName} ${user.lastName}`}</div>
-                        <div>{user.username}</div>
+                        <div className="font-bold truncate w-32">{`${fullName}`}</div>
+                        <div>{username}</div>
                     </div>
                 </div>)
             }
@@ -68,10 +71,10 @@ export const Header = () => {
                             (<>
                                 <Button
                                     type="button"
-                                    className="text-gray-900 rounded-full w-16 h-16 focus:shadow-none text-2xl"
+                                    className="text-gray-900 w-20 h-20 focus:shadow-none justify-end text-6xl"
                                     onClick={(e) => menuRight?.current.toggle(e)}
                                 >
-                                    <PersonOutlineOutlinedIcon className="text-3xl" />
+                                    <PersonOutlineOutlinedIcon className="text-4xl" />
                                 </Button>
                                 <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
                             </>

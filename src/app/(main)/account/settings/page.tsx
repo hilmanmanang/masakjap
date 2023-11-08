@@ -9,31 +9,18 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Auth from "../../auth/login/page";
+import { convertPlaceholderName } from "@/utils/utils";
+import { useGlobalContext } from "@/providers/context/globalContext";
 
 export default function Setings() {
     const { data: session, status } = useSession();
-    const [registerForm, setRegisterForm] = useState<User>(initUser)
-    const { firstName, lastName, username, image } = registerForm
+    const { userLogin, setUserLogin } = useGlobalContext()
+    const { fullName, username, image } = userLogin
     const { edgestore } = useEdgeStore();
     const [urls, setUrls] = useState<{
         url: string;
         thumbnailUrl: string | null;
     }>();
-
-    useEffect(() => {
-        if (session?.user) {
-            const { user }: any = session
-            const { id, firstName, lastName, username, image } = user
-            setRegisterForm({
-                ...registerForm,
-                id,
-                firstName,
-                lastName,
-                username,
-                image
-            })
-        }
-    }, [session])
 
     const handleChangeImage = async (event: any) => {
         const file: File = event.target.files?.[0]
@@ -46,23 +33,41 @@ export default function Setings() {
                 url: res.url,
                 thumbnailUrl: res.thumbnailUrl,
             });
-            setRegisterForm({
-                ...registerForm,
+            setUserLogin({
+                ...userLogin,
                 image: res.url
             })
         }
     }
 
+    const getUserByUsername = async (email: string) => {
+        const response = await fetch("/api/user/findFirst", {
+            method: "POST",
+            body: JSON.stringify({
+                username: email
+            })
+        })
+        const user = await response.json()
+        const { id, fullName, username, image } = user
+
+        setUserLogin({
+            ...userLogin,
+            id,
+            fullName,
+            username,
+            image
+        })
+    }
+
     const handleUpdateAccount = async (event: any) => {
         event.preventDefault();
-        const { id, firstName, lastName, username } = registerForm
+        const { id, fullName, username } = userLogin
 
         const response = await fetch("/api/user/update", {
             method: "PUT",
             body: JSON.stringify({
                 id,
-                firstName,
-                lastName,
+                fullName,
                 username,
                 image
             })
@@ -88,32 +93,15 @@ export default function Setings() {
         <div className="flex xl:flex-row flex-col-reverse p-6 gap-6">
             <div className="w-full">
                 <div className="mb-4">
-                    <div className="text-gray-900 text-sm font-normal mb-2">First Name*</div>
+                    <div className="text-gray-900 text-sm font-normal mb-2">Full Name*</div>
                     <InputText
-                        value={firstName}
+                        value={fullName}
                         type="text"
-                        onChange={(e) => setRegisterForm({
-                            ...registerForm,
-                            firstName: e.target.value
+                        onChange={(e) => setUserLogin({
+                            ...userLogin,
+                            fullName: e.target.value
                         })}
-                        placeholder="Insert first name"
-                        pt={{
-                            root: {
-                                className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
-                            }
-                        }}
-                    />
-                </div>
-                <div className="mb-4">
-                    <div className="text-gray-900 text-sm font-normal mb-2">Last Name*</div>
-                    <InputText
-                        value={lastName}
-                        type="text"
-                        onChange={(e) => setRegisterForm({
-                            ...registerForm,
-                            lastName: e.target.value
-                        })}
-                        placeholder="Insert last name"
+                        placeholder="Insert full name"
                         pt={{
                             root: {
                                 className: "shadow-none outline-none rounded-md h-12 px-3 w-full border border-gray-100 placeholder:text-gray-400"
@@ -126,8 +114,8 @@ export default function Setings() {
                     <InputText
                         value={username}
                         type="text"
-                        onChange={(e) => setRegisterForm({
-                            ...registerForm,
+                        onChange={(e) => setUserLogin({
+                            ...userLogin,
                             username: e.target.value
                         })}
                         placeholder="Insert username"
@@ -140,7 +128,7 @@ export default function Setings() {
                 </div>
                 <Button
                     className="text-white bg-success py-[0.875rem] px-8 rounded-full shadow-none"
-                    disabled={!firstName || !lastName || !username}
+                    disabled={!fullName || !username}
                     onClick={handleUpdateAccount}
                 >
                     Save Changes
@@ -153,9 +141,9 @@ export default function Setings() {
                             src={image}
                             alt={image}
                             fill={true}
-                            className="w-56 h-56 rounded-full"
+                            className="w-56 h-56 rounded-full object-cover"
                         /> :
-                        <div className="w-56 h-56 rounded-full bg-[#20b52633] text-success flex justify-center items-center text-8xl font-medium">HA</div>
+                        <div className="w-56 h-56 rounded-full bg-[#20b52633] text-success flex justify-center items-center text-8xl font-medium">{convertPlaceholderName(fullName)}</div>
                     }
                 </div>
                 <div className="mt-5 flex justify-center">

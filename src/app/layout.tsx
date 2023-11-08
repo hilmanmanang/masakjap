@@ -21,8 +21,8 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <GlobalContextProvider>
-                <NextAuthProviders>
+            <NextAuthProviders>
+                <GlobalContextProvider>
                     <PrimeReactProvider>
                         <EdgeStoreProvider>
                             <body className={poppins.className}>
@@ -42,8 +42,8 @@ export default function RootLayout({
                             </body>
                         </EdgeStoreProvider>
                     </PrimeReactProvider>
-                </NextAuthProviders>
-            </GlobalContextProvider>
+                </GlobalContextProvider>
+            </NextAuthProviders>
         </html>
     )
 }

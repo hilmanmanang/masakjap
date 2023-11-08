@@ -10,7 +10,6 @@ export interface User {
     username: string
     password: string
     role: "User" | "Admin" | "Super Admin",
-    firstName: string,
-    lastName: string,
-    image: string | null | undefined
+    fullName: string,
+    image: string
 }
