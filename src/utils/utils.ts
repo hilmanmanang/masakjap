@@ -12,7 +12,7 @@ export const generateKeyName = (name: string): string => {
     return name.toLowerCase().replace(/\s/g, '')
 }
 
-export const convertPlaceholderName = (name: string): string => {
+export const convertPlaceholderName = (name: string = ''): string => {
     const nameArray = name.toUpperCase().trim().split(" ")
     return nameArray[0] ? `${nameArray[0][0]}${nameArray.length > 1 ? nameArray[1][0] : ''}` : ''
 }
